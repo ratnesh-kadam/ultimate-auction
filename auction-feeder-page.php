@@ -83,20 +83,17 @@ echo $show_content;
 ?>
 
 <div class="wdm-auction-listing-container">
-    <ul class="wdm_auctions_list">
+    <ul class="wdm_auctions_list wdm_auction_ListingResults">
         <li class="auction-list-menus">
-            <ul>
-                <li class="wdm-apn auc_single_list wdm-ua-desktop wdm-auc-column-header-product"><strong><?php _e('Product', 'wdm-ultimate-auction'); ?></strong></li>
-                <li class="auc_single_list wdm-ua-af-list-wrap-alt">
-                    <ul class="clearfix wdm-ua-af-list-inner-alt">
-                        <li class="wdm-apt auc_single_list wdm-ua-desktop"><strong></strong></li>
-                        <li class="wdm-apb auc_single_list wdm-ua-desktop wdm-auc-column-header"><strong><?php _e('Bids', 'wdm-ultimate-auction'); ?></strong></li>
-                        <li class="wdm-app auc_single_list wdm-ua-desktop wdm-auc-column-header"><strong><?php _e('Time Left', 'wdm-ultimate-auction'); ?></strong></li>
-                        <li class="wdm-ape auc_single_list wdm-ua-desktop wdm-auc-column-header"><strong><?php _e('Buy Now', 'wdm-ultimate-auction'); ?></strong></li>
-                    </ul>
-                </li>
-                <li class="wdm-apn auc_single_list wdm-ua-desktop wdm-auc-column-header1"><strong><?php _e('Price', 'wdm-ultimate-auction'); ?></strong></li>
-            </ul>
+            <span class="wdm_auction_column_header___headers wdm_auction_column_header___app" data-reactid="417">
+                <ul class="wdm_auction_column_header___items" data-reactid="418">
+                    <li class="wdm_auction_column_header___type" data-reactid="419">Product</li>
+                    <li class="wdm_auction_column_header___bids" data-reactid="420">Bids</li>
+                    <li class="wdm_auction_column_header___timeRemaining" data-reactid="421">Time Left</li>
+                    <li class="wdm_auction_column_header___buyItNow" data-reactid="422">Buy Now</li>
+                    <li class="wdm_auction_column_header___price" data-reactid="423">Price</li>
+                </ul>
+            </span>
         </li>
 
         <?php
@@ -106,12 +103,13 @@ echo $show_content;
             $query = "SELECT MAX(bid) FROM " . $wpdb->prefix . "wdm_bidders WHERE auction_id =" . $wdm_single_auction->ID;
             $curr_price = $wpdb->get_var($query);
             ?>
-            <li class="wdm-auction-single-item">
-                <a href="<?php echo get_permalink() . $set_char . "ult_auc_id=" . $wdm_single_auction->ID; ?>" class="wdm-auction-list-link">
-                    <ul class="clearfix">
-                        <li class="wdm-apn auc_single_list wdm-ua-single-list">
-                            <div  class="wdm_single_auction_thumb">
-                                <?php
+            <li class="wdm_auction_list_result">
+                <div class="wdm_auction_highlight_row">
+                    <span class="wdm_auction_list_wrapper">
+                        <a class="wdm_auction_list_resultLink" href="<?php echo get_permalink() . $set_char . "ult_auc_id=" . $wdm_single_auction->ID; ?>" class="wdm-auction-list-link">
+
+                            <div class="wdm_auction_thumb_wrapper">
+                            <?php
                                 $vid_arr = array('mpg', 'mpeg', 'avi', 'mov', 'wmv', 'wma', 'mp4', '3gp', 'ogm', 'mkv', 'flv');
                                 $auc_thumb = get_post_meta($wdm_single_auction->ID, 'wdm_auction_thumb', true);
                                 $imgMime = wdm_get_mime_type($auc_thumb);
@@ -128,33 +126,29 @@ echo $show_content;
                                     $auc_thumb = plugins_url('img/no-pic.jpg', __FILE__);
                                 }
                                 ?>
-                                <img src="<?php echo $auc_thumb; ?>" alt="<?php echo $wdm_single_auction->post_title; ?>" class="tileImageThumb"/>
+                                <img src="<?php echo $auc_thumb; ?>" alt="<?php echo $wdm_single_auction->post_title; ?>" class="ListingTile___tile ListingTile___tileImageApp"/>
                             </div>
-                            <div class="wdm-ua-bid-now-btn-wrap wdm-ua-responsive">
-                                <input class="wdm_bid_now_btn" type="button" value="<?php _e('Bid Now', 'wdm-ultimate-auction'); ?>" />
-                            </div>
-                        </li>
-
-                        <li class="auc_single_list wdm-ua-af-list-wrap-alt">
-                            <ul class="clearfix wdm-ua-af-list-inner-alt">
-                                <li class="wdm-apt auc_single_list wdm-ua-single-list wdm-ua-af-listing-alt">
-                                    <div class="wdm-auction-title"><?php echo $wdm_single_auction->post_title; ?></div>
-                                </li>
-
-                                <li class="wdm-apb auc_single_list auc_list_center wdm-ua-af-listing-alt">
-                                    <strong class="wdm-ua-responsive wdmua-feeder-label"><?php _e('Bids Placed', 'wdm-ultimate-auction'); ?>: </strong>
-                                    <?php
-                                    $get_bids = "SELECT COUNT(bid) FROM " . $wpdb->prefix . "wdm_bidders WHERE auction_id =" . $wdm_single_auction->ID;
-                                    $bids_placed = $wpdb->get_var($get_bids);
-                                    if (!empty($bids_placed) || $bids_placed > 0)
-                                        echo "<span class='wdm-bids-avail wdm-mark-normal'>" . $bids_placed . __(' Bids','wdm-ultimate-auction') . "</span>";
+                            <span class="wdm_auction_list_info_column">
+                                <span class="wdm_auction_list_resultRow">
+                                    <span class="wdm_auction_listing_title"><?php echo $wdm_single_auction->post_title; ?></span>
+                                    <span class="wdm_auction_listing_bidcount wdm_auction_listing_rowelement">
+                                        <span>
+                                            <?php
+                                                $get_bids = "SELECT COUNT(bid) FROM " . $wpdb->prefix . "wdm_bidders WHERE auction_id =" . $wdm_single_auction->ID;
+                                                $bids_placed = $wpdb->get_var($get_bids);
+                                                if (!empty($bids_placed) || $bids_placed > 0){
+                                                    if($bids_placed >1)
+                                                        echo $bids_placed . __(' Bids','wdm-ultimate-auction');
+                                                    else
+                                                        echo $bids_placed . __(' Bid','wdm-ultimate-auction');
+                                                }
                                     
-                                    ?>
-                                </li>
-
-                                <li class="wdm-ape auc_single_list auc_list_center wdm-ua-af-listing-alt wdm-ua-af-listing-alt-last">
-                                    <strong class="wdm-ua-responsive wdmua-feeder-label"><?php _e('Ending', 'wdm-ultimate-auction'); ?>: </strong>
-                                    <?php
+                                            ?>
+                                        </span>
+                                    </span>
+                                    <span class="wdm_auction_list_time_remaining wdm_auction_listing_rowelement">
+                                        <span>
+                                            <?php
                                     $now = time();
                                     $ending_date = strtotime(get_post_meta($wdm_single_auction->ID, 'wdm_listing_ends', true));
                                     $act_trm = wp_get_post_terms($wdm_single_auction->ID, 'auction-status', array("fields" => "names"));
@@ -174,40 +168,37 @@ echo $show_content;
                                         $seconds %= 60;
 
                                         if ($days > 1)
-                                            echo "<span class='wdm-mark-normal'>" . $days . " " . __('days', 'wdm-ultimate-auction') . "</span>";
+                                            echo $days . " " . __('days', 'wdm-ultimate-auction');
                                         elseif ($days == 1)
-                                            echo "<span class='wdm-mark-red'>" . $days . " " . __('day', 'wdm-ultimate-auction') . "</span>";
+                                            echo $days . " " . __('day', 'wdm-ultimate-auction');
                                         elseif ($days < 1) {
                                             if ($hours > 1)
-                                                echo "<span class='wdm-mark-red'>" . $hours . " " . __('hours', 'wdm-ultimate-auction') . "</span>";
+                                                echo $hours . " " . __('hours', 'wdm-ultimate-auction');
                                             elseif ($hours == 1)
-                                                echo "<span class='wdm-mark-red'>" . $hours . " " . __('hour', 'wdm-ultimate-auction') . "</span>";
+                                                echo $hours . " " . __('hour', 'wdm-ultimate-auction');
                                             elseif ($hours < 1) {
                                                 if ($minutes > 1)
-                                                    echo "<span class='wdm-mark-red'>" . $minutes . " " . __('minutes', 'wdm-ultimate-auction') . "</span>";
+                                                    echo $minutes . " " . __('minutes', 'wdm-ultimate-auction');
                                                 elseif ($minutes == 1)
-                                                    echo "<span class='wdm-mark-red'>" . $minutes . " " . __('minute', 'wdm-ultimate-auction') . "</span>";
+                                                    echo $minutes . " " . __('minute', 'wdm-ultimate-auction');
                                                 elseif ($minutes < 1) {
                                                     if ($seconds > 1)
-                                                        echo "<span class='wdm-mark-red'>" . $seconds . " " . __('seconds', 'wdm-ultimate-auction') . "</span>";
+                                                        echo $seconds . " " . __('seconds', 'wdm-ultimate-auction');
                                                     elseif ($seconds == 1)
-                                                        echo "<span class='wdm-mark-red'>" . $seconds . " " . __('second', 'wdm-ultimate-auction') . "</span>";
+                                                        echo $seconds . " " . __('second', 'wdm-ultimate-auction');
                                                     else
-                                                        echo "<span class='wdm-mark-red'>" . __('Expired', 'wdm-ultimate-auction') . "</span>";
+                                                        echo __('Expired', 'wdm-ultimate-auction');
                                                 }
                                             }
                                         }
                                     }
                                     else {
-                                        echo "<span class='wdm-mark-red'>" . __('Expired', 'wdm-ultimate-auction') . "</span>";
+                                        echo __('Expired', 'wdm-ultimate-auction');
                                     }
                                     ?>
-                                    <br/>
-                                </li>
-
-                                <li class="wdm-app auc_single_list auc_list_center wdm-ua-single-list wdm-ua-af-listing-alt">
-                                    <strong class="wdm-ua-responsive wdmua-feeder-label"><?php _e('Current Price', 'wdm-ultimate-auction'); ?>: </strong>
-                                    <span class="wdm-auction-price wdm-mark-black">
+                                        </span>
+                                    </span>
+                                    <span class="wdm_auction_list_buynowprice wdm_auction_listing_rowelement">
                                         <?php
                                         $cc = substr(get_option('wdm_currency'), -3);
                                         $ob = get_post_meta($wdm_single_auction->ID, 'wdm_opening_bid', true);
@@ -215,18 +206,23 @@ echo $show_content;
 
                                             if(!empty($bnp))
                                                 echo $currency_symbol . number_format($bnp, 2, '.', ',') ;
-                                    ?>
+                                        ?>
                                     </span>
-                                </li>
-
-                                
-                            </ul>
-                        </li>
-
-                        <li class="wdm-apbid auc_single_list auc_list_center wdm-ua-bid-now-wrap wdm-ua-desktop">
-                            <span class="ListingResults___ctaColumn">
-                                <span class="ListingResults___ctaPrice ListingResults___currentPrice">
-                                <?php
+                                </span>
+                                <span class="wdm_auction_list_resultRow">
+                                    <div class="ListingResults___keyAttributes">
+                                    <!-- react-text: 441 -->New<!-- /react-text --><!-- react-text: 442 --> <!-- /react-text --><!-- react-text: 443 -->Product<!-- /react-text -->
+                                    </div>
+                                </span>
+                                <span class="wdm_auction_list_resultRow">
+                                    <span class="ListingResults___performanceInfo">
+                                        <?php echo $wdm_single_auction->post_excerpt; ?>
+                                    </span>
+                                </span>
+                            </span>
+                            <span class="wdm_auction_list_ctaColumn">
+                                <span class="wdm_auction_list_price wdm_auction_list_currentprice">
+                                    <?php
                                         $cc = substr(get_option('wdm_currency'), -3);
                                         $ob = get_post_meta($wdm_single_auction->ID, 'wdm_opening_bid', true);
                                         $bnp = get_post_meta($wdm_single_auction->ID, 'wdm_buy_it_now', true);
@@ -240,20 +236,20 @@ echo $show_content;
                                             printf(__('Buy at %s%s %s', 'wdm-ultimate-auction'), $currency_symbol, number_format($bnp, 2, '.', ','), $currency_code_display);
                                     ?>
                                 </span>
-                                <span class="ListingResults___buttonsWrapper" data-reactid="448">
-                                    
-                                        <span class="BidButton___bidButtonWrapper">
-                                            <input class="wdm_bid_now_btn" type="button" value="<?php _e('Bid Now', 'wdm-ultimate-auction'); ?>" />
+                                <span class="wdm_auction_list_buttonsWrapper">
+                                        <span class="wdm_auction_list_bidButtonsWrapper spacing___pad0 spacing___mgnLeftXxs">
+                                            <span class="wdm_auction_list_bid_bidButtonsWrapper">
+                                                <button class="Button___xs Button___button Button___block BidButton___ctaButton" type="button">
+                                                    <?php _e('Bid Now', 'wdm-ultimate-auction'); ?>
+                                                </button>
+                                            </span>
                                         </span>
-                                    
                                 </span>
-                            </span>
 
-                            
-                        </li>
-                        <li class="wdm-ua-desktop"><div class="wdm-apd"><?php echo $wdm_single_auction->post_excerpt; ?> </div></li>
-                    </ul>
-                </a>
+                            </span>
+                        </a>
+                    </span>
+                </div>
             </li>
             <?php
         }
