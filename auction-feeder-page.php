@@ -173,21 +173,21 @@ echo $show_content;
                                             echo $days . " " . __('day', 'wdm-ultimate-auction');
                                         elseif ($days < 1) {
                                             if ($hours > 1)
-                                                echo $hours . " " . __('hours', 'wdm-ultimate-auction');
+                                                echo "<span class='wdm-mark-red'>".$hours . " " . __('hours', 'wdm-ultimate-auction')."</span>";
                                             elseif ($hours == 1)
-                                                echo $hours . " " . __('hour', 'wdm-ultimate-auction');
+                                                echo "<span class='wdm-mark-red'>".$hour . " " . __('hour', 'wdm-ultimate-auction')."</span>";
                                             elseif ($hours < 1) {
                                                 if ($minutes > 1)
-                                                    echo $minutes . " " . __('minutes', 'wdm-ultimate-auction');
+                                                    echo "<span class='wdm-mark-red'>".$minutes . " " . __('minutes', 'wdm-ultimate-auction')."</span>";
                                                 elseif ($minutes == 1)
-                                                    echo $minutes . " " . __('minute', 'wdm-ultimate-auction');
+                                                    echo "<span class='wdm-mark-red'>".$minutes . " " . __('minute', 'wdm-ultimate-auction')."</span>";
                                                 elseif ($minutes < 1) {
                                                     if ($seconds > 1)
-                                                        echo $seconds . " " . __('seconds', 'wdm-ultimate-auction');
+                                                        "<span class='wdm-mark-red'>".$seconds . " " . __('seconds', 'wdm-ultimate-auction')."</span>";
                                                     elseif ($seconds == 1)
-                                                        echo $seconds . " " . __('second', 'wdm-ultimate-auction');
+                                                        echo "<span class='wdm-mark-red'>".$seconds . " " . __('second', 'wdm-ultimate-auction')."</span>";
                                                     else
-                                                        echo __('Expired', 'wdm-ultimate-auction');
+                                                        echo "<span class='wdm-mark-red'>". __('Expired', 'wdm-ultimate-auction')."</span>";
                                                 }
                                             }
                                         }
